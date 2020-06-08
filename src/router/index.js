@@ -1,6 +1,8 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Home from '../views/Home.vue'
+import New from "../components/CreateNewTask.vue"
+import TaskList from "../views/ListTask.vue"
 
 Vue.use(VueRouter)
 
@@ -9,6 +11,16 @@ Vue.use(VueRouter)
     path: '/',
     name: 'Home',
     component: Home
+  },
+  {
+    path: '/task/:id',
+    name: 'TaskList',
+    component: TaskList
+  },
+  {
+    path: '/new',
+    name: 'New',
+    component: New
   },
   {
     path: '/about',
@@ -23,6 +35,11 @@ Vue.use(VueRouter)
 const router = new VueRouter({
   mode: 'history',
   base: process.env.BASE_URL,
+  // scrollBehavior : (to, from, savedPosition) => {
+  //   if (savedPosition) {
+  //     return savedPosition
+  //   }
+  // },
   routes
 })
 

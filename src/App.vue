@@ -22,16 +22,21 @@ export default {
     NavBar,
   },
   watch: {
-    // getUpcomingTodoTime() {
-    // this.$store.dispatch("checkUpcomingTime")
-      
-    // }
+    getUpcomingTodoTime() {
+      this.$store.dispatch("checkUpcomingTime")
+    }
   },
   mounted() {
-    // this.$store.dispatch("checkUpcomingTime")
+    this.$store.dispatch("checkUpcomingTime")
   },
-  updated() {
-    
+  created() {
+    if (this.$workbox) {
+      console.log("workbox detected")
+      this.$workbox.addEventListener("waiting", () => {
+        // this.showUpdateUI = true;
+        // show UI to refresh page
+      });
+    }
   }
 }
 </script>>

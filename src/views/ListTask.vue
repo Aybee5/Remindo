@@ -83,6 +83,18 @@
         // console.log("mounted")
         // this.checkTime()
         this.getTodos = this.$store.dispatch("loadTodo")
+        // if ('serviceWorker' in navigator && navigator.serviceWorker.controller) {
+        //   navigator.serviceWorker.controller.postMessage("open local storage")
+        //   // return false
+        // }
+        // else {
+        //   console.log("You can do it")
+        //   // return false
+        // }
+        if (this.$workbox) {
+          const swVersion = this.$workbox.messageSW({type: 'GET_VERSION'});
+          console.log('Service Worker version:', swVersion);
+        }
       },
       updated() {
         // console.log("updated")

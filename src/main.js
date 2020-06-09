@@ -1,6 +1,5 @@
 import Vue from 'vue'
 import App from './App.vue'
-import './registerServiceWorker'
 import router from './router'
 import store from './store'
 import vuetify from './plugins/vuetify';
@@ -9,6 +8,10 @@ import Moment from "moment";
 import { sync } from "vuex-router-sync";
 import localforage from "localforage";
 import { extendMoment } from 'moment-range';
+
+import wb from "./registerServiceWorker";
+
+Vue.prototype.$workbox = wb;
 
 const moment = extendMoment(Moment)
 // import VueWorker from 'vue-worker'

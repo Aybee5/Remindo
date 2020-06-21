@@ -15,22 +15,21 @@ export default {
     }
   },
   computed:{
-    ...mapActions(["checkUpcomingTime"]),
+    ...mapActions(["checkLeastUpcomingTime"]),
     ...mapGetters(["getUpcomingTodoTime"])
   },
   components:{
     NavBar,
   },
   watch: {
-    // getUpcomingTodoTime() {
-    // this.$store.dispatch("checkUpcomingTime")
-      
-    // }
+    getUpcomingTodoTime() {
+      this.$store.dispatch("checkLeastUpcomingTime")
+    }
   },
   mounted() {
-    // this.$store.dispatch("checkUpcomingTime")
+    this.$store.dispatch("checkLeastUpcomingTime")
   },
-  updated() {
+  created() {
     
   }
 }

@@ -140,7 +140,9 @@ export default {
             // if (!(this.moment(fullTime).isBefore(now))) {
                 this.$store.dispatch("createNewTodo", payload)
                 this.$router.push('/task/upcoming')
-                
+                window.location.reload()
+            console.log(payload)   
+            this.$store.dispatch("checkLeastUpcomingTime") 
             // }
             // else if (fullTime == "Invalid date") {
             //     console.log("elif",fullTime)

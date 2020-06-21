@@ -8,21 +8,14 @@ import Moment from "moment";
 import { sync } from "vuex-router-sync";
 import localforage from "localforage";
 import { extendMoment } from 'moment-range';
-
-import wb from "./registerServiceWorker";
-
-Vue.prototype.$workbox = wb;
+import './registerServiceWorker'
 
 const moment = extendMoment(Moment)
-// import VueWorker from 'vue-worker'
 
-// Vue.use(VueWorker)
 Vue.use(localforage)
 
 
 Vue.config.productionTip = false
-
-// Vue.use(moment)
 
 sync(store, router)
 
@@ -35,6 +28,9 @@ Vue.mixin({
     //   VueWorker.run(store.dispatch("checkUpcomingTime"))
     // },
     moment
+  },
+  mounted() {
+    
   }
 })
 

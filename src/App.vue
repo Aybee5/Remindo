@@ -15,7 +15,7 @@ export default {
     }
   },
   computed:{
-    ...mapActions(["checkUpcomingTime"]),
+    ...mapActions(["checkLeastUpcomingTime"]),
     ...mapGetters(["getUpcomingTodoTime"])
   },
   components:{
@@ -23,20 +23,14 @@ export default {
   },
   watch: {
     getUpcomingTodoTime() {
-      this.$store.dispatch("checkUpcomingTime")
+      this.$store.dispatch("checkLeastUpcomingTime")
     }
   },
   mounted() {
-    this.$store.dispatch("checkUpcomingTime")
+    this.$store.dispatch("checkLeastUpcomingTime")
   },
   created() {
-    if (this.$workbox) {
-      console.log("workbox detected")
-      this.$workbox.addEventListener("waiting", () => {
-        // this.showUpdateUI = true;
-        // show UI to refresh page
-      });
-    }
+    
   }
 }
 </script>>

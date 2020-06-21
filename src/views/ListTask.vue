@@ -37,6 +37,7 @@
 </template>
 
 <script>
+  
   import { mapActions, mapGetters } from "vuex";
   export default {
     methods: {
@@ -46,29 +47,15 @@
       deleteTodo(item) {
         this.$store.dispatch("deleteTodo", item)
       },
-      checkTime() {
-        // setTimeout({
-        //   console.log("Hell"), 
-        // }
-        //   // this.dispatch("checkUpcomingTime"),
-        //   1000)
-        // setInterval(() => {
-        //   console.log("Hello")
-        //   this.$store.dispatch("checkUpcomingTime")
-        // }, 600);
-        // console.log("in check")
-        // this.$workee()
-
-      }
     },
     computed : {
       ...mapGetters({
         getNavId: "getNavId", 
-       getTodos: "getTodos",
+        getTodos: "getTodos",
         getIcon:"getIcon", 
         isComplete: "isComplete", 
         getUpcomingTodoTime:"getUpcomingTodoTime"}),
-      ...mapActions(["loadTodo", "checkUpcomingTime"]),
+      ...mapActions(["loadTodo", "checkUpcomingTime","checkLeastUpcomingTime"]),
     },
     watch: {
       $route() {
@@ -83,18 +70,8 @@
         // console.log("mounted")
         // this.checkTime()
         this.getTodos = this.$store.dispatch("loadTodo")
-        // if ('serviceWorker' in navigator && navigator.serviceWorker.controller) {
-        //   navigator.serviceWorker.controller.postMessage("open local storage")
-        //   // return false
-        // }
-        // else {
-        //   console.log("You can do it")
-        //   // return false
-        // }
-        if (this.$workbox) {
-          const swVersion = this.$workbox.messageSW({type: 'GET_VERSION'});
-          console.log('Service Worker version:', swVersion);
-        }
+        // this.$store.dispatch("checkLeastUpcomingTime")
+        console.log("mounted again ")
       },
       updated() {
         // console.log("updated")

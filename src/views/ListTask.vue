@@ -72,6 +72,12 @@
         this.getTodos = this.$store.dispatch("loadTodo")
         // this.$store.dispatch("checkLeastUpcomingTime")
         console.log("mounted again ")
+        Notification.requestPermission()
+        .then((result)=> {
+          if (result === "granted") {
+            console.log("notification on")
+          }
+        })
       },
       updated() {
         // console.log("updated")

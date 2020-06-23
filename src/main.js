@@ -9,10 +9,13 @@ import { sync } from "vuex-router-sync";
 import localforage from "localforage";
 import { extendMoment } from 'moment-range';
 import './registerServiceWorker'
+import VueSwal from 'vue-swal'
+
 
 const moment = extendMoment(Moment)
 
 Vue.use(localforage)
+Vue.use(VueSwal)
 
 
 Vue.config.productionTip = false
@@ -24,9 +27,6 @@ Vue.mixin({
     $back() {
       window.history.back()
     },
-    // $workee() {
-    //   VueWorker.run(store.dispatch("checkUpcomingTime"))
-    // },
     moment
   },
   mounted() {

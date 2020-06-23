@@ -40,12 +40,49 @@
   
   import { mapActions, mapGetters } from "vuex";
   export default {
+    /* 
+    const Toast = Swal.mixin({
+  toast: true,
+  position: 'top-end',
+  showConfirmButton: false,
+  timer: 3000,
+  timerProgressBar: true,
+  onOpen: (toast) => {
+    toast.addEventListener('mouseenter', Swal.stopTimer)
+    toast.addEventListener('mouseleave', Swal.resumeTimer)
+  }
+})
+
+Toast.fire({
+  icon: 'success',
+  title: 'Signed in successfully'
+})
+    */
     methods: {
       complete(item) {
-        this.$store.dispatch("complete", item)
+        this.$swal("Are you sure you want to delete?")
+        .then(value => {
+          if (value) {
+            this.$store.dispatch("complete", item)
+          }
+        })
       },
       deleteTodo(item) {
-        this.$store.dispatch("deleteTodo", item)
+        this.$swal({ title: "Are you sure?",
+        text: "Once deleted, you will not be able to recover this task!",
+        icon: "warning",
+        buttons: true,
+        dangerMode: true,
+        })
+        .then(value => {
+          if (value) {
+            this.$swal.fire({
+              icon: 'success',
+              title: 'Signed in successfully'
+            })
+            this.$store.dispatch("deleteTodo", item)
+          }
+        })
       },
     },
     computed : {

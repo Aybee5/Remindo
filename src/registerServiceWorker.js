@@ -5,7 +5,7 @@ import { register } from 'register-service-worker'
 import localforage from "localforage";
 import { setTimeout } from 'core-js';
 
-if (process.env.NODE_ENV === 'production') {
+// if (process.env.NODE_ENV === 'production') {
   register(`${process.env.BASE_URL}service-worker.js`, {
     ready (registration) {  
       let showNotifications = () => {
@@ -20,7 +20,8 @@ if (process.env.NODE_ENV === 'production') {
               action: "discard",
               title: "Discard",
             }
-          ]
+          ],
+          requireInteraction: true
         }) 
       }
       self.addEventListener("notificationclick", evt =>{
@@ -30,7 +31,7 @@ if (process.env.NODE_ENV === 'production') {
         if (event.data) {
           localforage.getItem("time").then((data)=>{
             if (!data) return;
-            setTimeout(showNotifications, data)
+            setTimeout(showNotifications, 5000)
           })
         }
       })
@@ -58,4 +59,4 @@ if (process.env.NODE_ENV === 'production') {
       console.error('Error during service worker registration:', error)
     }
   })
-}
+// }

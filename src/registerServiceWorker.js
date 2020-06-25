@@ -8,20 +8,24 @@ import { setTimeout } from 'core-js';
 // if (process.env.NODE_ENV === 'production') {
   register(`${process.env.BASE_URL}service-worker.js`, {
     ready (registration) {  
+      console.log(registration)
       let showNotifications = () => {
-        registration.showNotification("You have a new task", {
-          body: "You ask me to remind you of this",
-          actions: [
-            {
-              action: "view",
-              title: "View",
-            },
-            {
-              action: "discard",
-              title: "Discard",
-            }
-          ],
-          requireInteraction: true
+        // registration.showNotification("You have a new task", {
+        //   body: "You ask me to remind you of this",
+        //   actions: [
+        //     {
+        //       action: "view",
+        //       title: "View",
+        //     },
+        //     {
+        //       action: "discard",
+        //       title: "Discard",
+        //     }
+        //   ],
+        //   requireInteraction: true
+        // })
+        new Notification("From non persis", {
+          body: "body"
         }) 
       }
       self.addEventListener("notificationclick", evt =>{

@@ -72,7 +72,7 @@
         // console.log("mounted")
         // this.checkTime()
         this.getTodos = this.$store.dispatch("loadTodo")
-        // this.$store.dispatch("checkLeastUpcomingTime")
+        this.$store.dispatch("checkLeastUpcomingTime")
         console.log("mounted again ")
         
       },

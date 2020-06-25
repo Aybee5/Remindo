@@ -3,7 +3,7 @@ import VueRouter from 'vue-router'
 import Home from '../views/Home.vue'
 import New from "../components/CreateNewTask.vue"
 import TaskList from "../views/ListTask.vue"
-// import Welcome from "../views/Welcome.vue"
+import Welcome from "../views/Welcome.vue"
 
 Vue.use(VueRouter)
 
@@ -18,11 +18,11 @@ Vue.use(VueRouter)
     name: 'TaskList',
     component: TaskList
   },
-  // {
-  //   path: '/welcome',
-  //   name: 'Welcome',
-  //   component: Welcome
-  // },
+  {
+    path: '/welcome',
+    name: 'Welcome',
+    component: Welcome
+  },
   {
     path: '/new',
     name: 'New',

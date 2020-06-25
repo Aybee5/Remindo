@@ -1,7 +1,7 @@
 <template>
   <v-app>
     <v-main>
-      <NavBar />
+      <NavBar v-if="notWelcome"> </NavBar>
       <router-view />
     </v-main>
     
@@ -16,6 +16,14 @@ export default {
     }
   },
   computed:{
+    notWelcome() {
+      if (this.$route.path == "/welcome") {
+        return false
+      }
+      else {
+        return true
+      }
+    }
   },
   components:{
     NavBar,

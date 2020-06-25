@@ -61,7 +61,9 @@
       $route() {
         this.getTodos = this.$store.dispatch("loadTodo")
       },
-
+      getUpcomingTodoTime() {
+      this.$store.dispatch("checkLeastUpcomingTime")
+      }
       // getUpcomingTodoTime() {
       //   // this.checkTime()
       // }
@@ -72,15 +74,22 @@
         this.getTodos = this.$store.dispatch("loadTodo")
         // this.$store.dispatch("checkLeastUpcomingTime")
         console.log("mounted again ")
+        
+      },
+      updated() {
+        // console.log("updated")
+      },
+      created() {
+        console.log("created")
         Notification.requestPermission()
         .then((result)=> {
           if (result === "granted") {
             console.log("notification on")
           }
         })
-      },
-      updated() {
-        // console.log("updated")
+        .catch(err=>{
+          console.log("failed fr pms", err)
+        })
       }
   }
 </script>

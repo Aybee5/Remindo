@@ -5,21 +5,32 @@ import { register } from 'register-service-worker'
 import localforage from "localforage";
 import { setTimeout } from 'core-js';
 
-let showNotifications = () =>{
-  new Notification("Hello", {
-    body: "Hello, You have a task todo",
-    requireInteraction: true,
-  })
-}
-
 if (process.env.NODE_ENV === 'production') {
   register(`${process.env.BASE_URL}service-worker.js`, {
-    ready () {
+    ready (registration) {  
+      let showNotifications = () => {
+        registration.showNotification("You have a new task", {
+          body: "You ask me to remind you of this",
+          actions: [
+            {
+              action: "view",
+              title: "View",
+            },
+            {
+              action: "discard",
+              title: "Discard",
+            }
+          ]
+        }) 
+      }
+      self.addEventListener("notificationclick", evt =>{
+        console.log(evt)
+      })
       self.addEventListener("message", event=>{
         if (event.data) {
           localforage.getItem("time").then((data)=>{
             if (!data) return;
-            setTimeout(showNotifications, 10000)
+            setTimeout(showNotifications, data)
           })
         }
       })

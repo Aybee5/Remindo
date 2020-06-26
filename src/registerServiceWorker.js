@@ -33,7 +33,7 @@ if (process.env.NODE_ENV === 'production') {
         if (event.data) {
           localforage.getItem("time").then((data)=>{
             if (!data) return;
-            setTimeout(showNotifications, 5000)
+            setTimeout(showNotifications, data)
           })
         }
       })
@@ -52,7 +52,6 @@ if (process.env.NODE_ENV === 'production') {
       console.log('New content is downloading.')
     },
     updated () {
-      self.skipWaiting().then(console.log("skipped"))
       console.log('New content is available; please refresh.')
     },
     offline () {

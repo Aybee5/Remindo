@@ -9,7 +9,6 @@
   },
   "dependencies": {
     "core-js": "^3.6.4",
-    "localforage": "^1.7.4",
     "material-design-icons-iconfont": "^5.0.1",
     "moment": "^2.26.0",
     "moment-range": "^4.0.2",

@@ -1,5 +1,5 @@
 <template>
-  
+  <div>
     <v-list three-line>
       <v-subheader>{{this.$route.params.id}} tasks</v-subheader>
       <v-divider inset></v-divider>
@@ -11,36 +11,66 @@
             <small>Due {{moment().to(item.fullTime)}}</small>
           </v-list-item-content>
           <v-list-item-icon>
-          <v-tooltip bottom>
-            <template v-slot:activator="{ on }">
-              <v-icon v-on="on" v-if="!isComplete" @click="complete(item)" color="green">done</v-icon>
-            </template>
-            <span>Mark Done</span>
-          </v-tooltip>
             <v-tooltip bottom>
-            <template v-slot:activator="{ on }">
-              <v-icon v-on="on" v-if="!isComplete" color="blue">edit</v-icon>
-            </template>
-            <span>Edit</span>
-          </v-tooltip>
-          <v-tooltip bottom>
-            <template v-slot:activator="{ on }">
-              <v-icon v-on="on" @click="deleteTodo(item)" color="red">delete</v-icon>
-            </template>
-            <span>Delete</span>
-          </v-tooltip>
+              <template v-slot:activator="{ on }">
+                <v-icon v-on="on" v-if="!isComplete" @click="complete(item)" color="green">done</v-icon>
+              </template>
+              <span>Mark Done</span>
+            </v-tooltip>
+            <v-tooltip bottom>
+              <template v-slot:activator="{ on }">
+                <v-icon v-on="on" v-if="!isComplete" color="blue">edit</v-icon>
+              </template>
+              <span>Edit</span>
+            </v-tooltip>
+            <v-tooltip bottom>
+              <template v-slot:activator="{ on }">
+                <v-icon v-on="on" @click="deleteTodo(item)" color="red">delete</v-icon>
+              </template>
+              <span>Delete</span>
+            </v-tooltip>
           </v-list-item-icon>
         </v-list-item>
         <v-divider inset :key="item.refKey"></v-divider>
       </template>
     </v-list>
+    <!-- dialog start -->
+    <v-row justify="center">
+      <v-dialog v-model="dialog" persistent max-width="290">
+        <v-card>
+          <v-card-title class="headline">Accept Notification</v-card-title>
+          <v-card-text>For the application to work correctly, Notification must be enable. After closing this modal, please accept notification and don't forget to Add to Home Screen</v-card-text>
+          <v-card-actions>
+            <v-spacer></v-spacer>
+            <v-btn color="green darken-1" text @click="notify">Ok</v-btn>
+          </v-card-actions>
+        </v-card>
+      </v-dialog>
+    </v-row>
+    <!-- dialog End -->
+
+    <!-- snackBar Start -->
+    <v-snackbar v-model="snackbar" timeout="2000">
+      {{ text }}
+      <template v-slot:action="{ attrs }">
+        <v-btn color="success" text v-bind="attrs" @click="snackbar = false">Ok</v-btn>
+      </template>
+    </v-snackbar>
+    <!-- snackBar End -->
+  </div>
 </template>
 
 <script>
-  
-  import { mapActions, mapGetters } from "vuex";
-  export default {
-    /* 
+import { mapActions, mapGetters } from "vuex";
+export default {
+  data() {
+    return {
+      dialog: false,
+      snackbar: false,
+      text: null
+    };
+  },
+  /* 
     const Toast = Swal.mixin({
   toast: true,
   position: 'top-end',
@@ -58,75 +88,67 @@ Toast.fire({
   title: 'Signed in successfully'
 })
     */
-    methods: {
-      complete(item) {
-        this.$swal("Are you sure you want to delete?")
-        .then(value => {
-          if (value) {
-            this.$store.dispatch("complete", item)
-          }
-        })
-      },
-      deleteTodo(item) {
-        this.$swal({ title: "Are you sure?",
-        text: "Once deleted, you will not be able to recover this task!",
-        icon: "warning",
-        buttons: true,
-        dangerMode: true,
-        })
-        .then(value => {
-          if (value) {
-            this.$swal.fire({
-              icon: 'success',
-              title: 'Signed in successfully'
-            })
-            this.$store.dispatch("deleteTodo", item)
-          }
-        })
-      },
-    },
-    computed : {
-      ...mapGetters({
-        getNavId: "getNavId", 
-        getTodos: "getTodos",
-        getIcon:"getIcon", 
-        isComplete: "isComplete", 
-        getUpcomingTodoTime:"getUpcomingTodoTime"}),
-      ...mapActions(["loadTodo", "checkUpcomingTime","checkLeastUpcomingTime"]),
-    },
-    watch: {
-      $route() {
-        this.getTodos = this.$store.dispatch("loadTodo")
-      },
-      getUpcomingTodoTime() {
-      this.$store.dispatch("checkLeastUpcomingTime")
-      }
-      // getUpcomingTodoTime() {
-      //   // this.checkTime()
-      // }
-    },
-      mounted() {
-        // console.log("mounted")
-        // this.checkTime()
-        this.getTodos = this.$store.dispatch("loadTodo")
-        this.$store.dispatch("checkLeastUpcomingTime")
-        console.log("mounted again ")
-        
-      },
-      updated() {
-        // console.log("updated")
-      },
-      created() {
-        console.log("created")
-        Notification.requestPermission()
-        .then((result)=> {
+  methods: {
+    notify() {
+      this.dialog = false;
+      Notification.requestPermission()
+        .then(result => {
           if (result === "granted") {
-            console.log("notification on")
+            console.log("notification on");
           }
         })
-        .catch(err=>{
-          console.log("failed fr pms", err)
-        })
-      }
+    },
+    complete(item) {
+      this.$store.dispatch("complete", item);
+      this.text = "Congratulation, you completed a task"
+      this.snackbar = true
+    },
+    deleteTodo(item) {
+      this.$store.dispatch("deleteTodo", item);
+      this.text = "Deleted successfully"
+      this.snackbar = true
+    }
+  },
+  computed: {
+    ...mapGetters({
+      getNavId: "getNavId",
+      getTodos: "getTodos",
+      getIcon: "getIcon",
+      isComplete: "isComplete",
+      getUpcomingTodoTime: "getUpcomingTodoTime"
+    }),
+    ...mapActions(["loadTodo", "checkUpcomingTime", "checkLeastUpcomingTime"])
+  },
+  watch: {
+    $route() {
+      this.getTodos = this.$store.dispatch("loadTodo");
+    },
+    getUpcomingTodoTime() {
+      this.$store.dispatch("checkLeastUpcomingTime");
+    }
+    // getUpcomingTodoTime() {
+    //   // this.checkTime()
+    // }
+  },
+  mounted() {
+    // console.log("mounted")
+    // this.checkTime()
+    this.getTodos = this.$store.dispatch("loadTodo");
+    this.$store.dispatch("checkLeastUpcomingTime");
+    console.log("mounted again ");
+  },
+  updated() {
+    // console.log("updated")
+  },
+  created() {
+    console.log("created");
+    if (
+      "Notification" in window &&
+      Notification.permission !== "denied" &&
+      Notification.permission !== "granted"
+    ) {
+      this.dialog = true;
+    }
   }
+};
 </script>

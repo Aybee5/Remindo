@@ -9,10 +9,11 @@ module.exports = {
 		appleMobileWebAppCapable: 'no',
 		appleMobileWebAppStatusBarStyle: 'default',
 		manifestPath: 'manifest.json',
-		workboxPluginMode: 'GenerateSW',
+		workboxPluginMode: 'InjectManifest',
     workboxOptions: {
       exclude: [/\.map$/, /_redirects/],
       // ...other Workbox options...
+      swSrc: "src/service-worker.js"
     }
   }
 }

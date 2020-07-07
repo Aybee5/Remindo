@@ -1,18 +1,14 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import Moment from 'moment'
-import localforage from "localforage";
-import {extendMoment} from "moment-range"
+import { extendMoment } from "moment-range"
 const moment = extendMoment(Moment)
 import VuexPersist from "vuex-persist";
 
 const vuexLocalStorage = new VuexPersist({
   key: 'vuex', // The key to store the state on in the storage provider.
   storage: window.localStorage, // or window.sessionStorage or localForage
-  // Function that passes the state and returns the state with only the objects you want to store.
-  // reducer: state => state,
-  // Function that passes a mutation and lets you decide if it should update the state in localStorage.
-  // filter: mutation => (true)
+  
 })
 
 Vue.use(Vuex)
@@ -23,7 +19,7 @@ export default new Vuex.Store({
     upcoming: [],
     overDue: [],
     completed: [],
-    todos:[]
+    todos: []
   },
   getters: {
     getNavId(state) {
@@ -40,7 +36,7 @@ export default new Vuex.Store({
     },
     checkOverDue(state) {
       let overDueLength = state.overDue.length
-      if ( overDueLength > 0) {
+      if (overDueLength > 0) {
         return overDueLength
       }
       return false
@@ -65,63 +61,20 @@ export default new Vuex.Store({
           upComingTodosTime.push(new Date(todoTime))
         }
       })
-      if (upComingTodosTime.length > 0){
-        let minDate = upComingTodosTime.reduce(function (a, b) { 
-          return a < b ? a : b;  
+      if (upComingTodosTime.length > 0) {
+        let minDate = upComingTodosTime.reduce(function (a, b) {
+          return a < b ? a : b;
         });
+        let leastTask = current.find(todo=> new Date(todo.fullTime) == minDate.toString())
         let now = moment()
-        let milliSecondsDiff = moment().range(now,minDate).diff()
-        localforage.setItem("time", milliSecondsDiff).then(()=>{
-          if ("serviceWorker" in navigator && navigator.serviceWorker.controller) {
-            navigator.serviceWorker.controller.postMessage({type: "FETCH_LT"})
-          }
-        })
+        let milliSecondsDiff = moment().range(now, minDate).diff()
+        if ("serviceWorker" in navigator && navigator.serviceWorker.controller) {
+          navigator.serviceWorker.controller.postMessage({ time: milliSecondsDiff, title: leastTask.title })
+        }
       }
-      
-      // let minDate = upComingTodosTime[0]
-      // let minDateObj = new Date(upComingTodosTime[0])
-      // upComingTodosTime.forEach((date, index)=>{
-      //   if (new Date(date) < minDateObj) {
-      //     minDate = date
-      //     minDateObj = new Date(date)
-      //   }
-      //   return
-      // })
-
-      //var max_dt = all_dates[0],
-      // max_dtObj = new Date(all_dates[0]);
-      // all_dates.forEach(function(dt, index)
-      //   {
-      //     if ( new Date( dt ) > max_dtObj)
-      //   {
-      //     max_dt = dt;
-      //     max_dtObj = new Date(dt);
-      //   }
-      //   });
-      // return max_dt;
-      // localforage.setItem("upcoming", context.state.upcoming)
-      //     .then((data)=>{
-      //       console.log("Saved", data)
-      //       context.commit("checkUpcomingTime", upComingTime)
-      //     })
-      //     .catch(err => console.log(err))
-        
-        
-      //     localforage.setItem("upcoming", context.state.upcoming)
-      //     .then((data)=>{
-      //       console.log("Saved", data)
-      //       // context.commit("checkUpcomingTime", upComingTime)
-      //     })
-      //     .catch(err => console.log(err))
-      //     localforage.setItem("upcomingsss", context.state.upcoming)
-      //     .then((data)=>{
-      //       console.log("Saved", data)
-      //       // context.commit("checkUpcomingTime", upComingTime)
-      //     })
-      //     .catch(err => console.log(err))
     },
     complete(context, payload) {
-      context.commit("complete", {item:payload, navId: context.getters.getNavId})
+      context.commit("complete", { item: payload, navId: context.getters.getNavId })
     },
     deleteTodo(context, payload) {
       context.commit("deleteTodo", payload)
@@ -131,15 +84,15 @@ export default new Vuex.Store({
     }
   },
   mutations: {
-    deleteTodo(state,payload) {
+    deleteTodo(state, payload) {
       let itemIndex = state.todos.indexOf(payload)
       state.todos.splice(itemIndex, 1)
     },
     checkUpcomingTime() {
-      
+
       // upComingTime
       // console.log(upComingTime)
-         
+
     },
     complete(state, payload) {
       let navId = payload.navId
@@ -153,7 +106,7 @@ export default new Vuex.Store({
         let itemIndex = state.overDue.indexOf(payload.item)
         let item = state.overDue.splice(itemIndex, 1)[0]
         state.completed.push(item)
-      }  
+      }
     },
     loadTodo(state, payload) {
       let id = payload

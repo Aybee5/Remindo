@@ -9,6 +9,7 @@ import { sync } from "vuex-router-sync";
 import { extendMoment } from 'moment-range';
 import './registerServiceWorker'
 
+
 const moment = extendMoment(Moment)
 
 Vue.config.productionTip = false
@@ -20,9 +21,6 @@ Vue.mixin({
     $back() {
       window.history.back()
     },
-    // $workee() {
-    //   VueWorker.run(store.dispatch("checkUpcomingTime"))
-    // },
     moment
   },
   mounted() {

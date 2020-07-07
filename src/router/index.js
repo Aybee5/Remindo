@@ -1,16 +1,15 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import Home from '../views/Home.vue'
 import New from "../components/CreateNewTask.vue"
 import TaskList from "../views/ListTask.vue"
+import Welcome from "../views/Welcome.vue"
 
 Vue.use(VueRouter)
 
   const routes = [
   {
     path: '/',
-    name: 'Home',
-    component: Home
+    redirect: '/task/upcoming'
   },
   {
     path: '/task/:id',
@@ -18,17 +17,14 @@ Vue.use(VueRouter)
     component: TaskList
   },
   {
+    path: '/welcome',
+    name: 'Welcome',
+    component: Welcome
+  },
+  {
     path: '/new',
     name: 'New',
     component: New
-  },
-  {
-    path: '/about',
-    name: 'About',
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "about" */ '../views/About.vue')
   }
 ]
 

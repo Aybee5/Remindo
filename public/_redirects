@@ -1,0 +1,5 @@
+/task/upcoming  /index.html 200
+/task/overdue   /index.html 200
+/task/completed /index.html 200
+/new            /index.html 200
+/welcome        /index.html 200

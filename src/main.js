@@ -6,14 +6,10 @@ import vuetify from './plugins/vuetify';
 import 'material-design-icons-iconfont/dist/material-design-icons.css'
 import Moment from "moment";
 import { sync } from "vuex-router-sync";
-import localforage from "localforage";
 import { extendMoment } from 'moment-range';
 import './registerServiceWorker'
 
 const moment = extendMoment(Moment)
-
-Vue.use(localforage)
-
 
 Vue.config.productionTip = false
 

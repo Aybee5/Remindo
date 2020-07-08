@@ -29,7 +29,9 @@ export default new Vuex.Store({
       return state.isComplete
     },
     getTodos(state) {
-      return state.todos
+      return state.todos.sort((a, b) => {
+        return a.fullTime > b.fullTime
+      })
     },
     getUpcomingTodoTime(state) {
       return state.upcoming

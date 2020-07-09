@@ -13,6 +13,7 @@
       <v-card-title>
             <v-flex xs12>
                 <v-img
+                :src="require('../assets/remindo.png')"
                 class="my-3"
                 contain
                 height="200"

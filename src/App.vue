@@ -24,3 +24,9 @@ export default {
   }
 };
 </script>
+
+<style>
+  #app {
+    overscroll-behavior-y: none;
+  }
+</style>

@@ -85,19 +85,13 @@
                       readonly
                       v-bind="attrs"
                       v-on="on"
-                    >
-                    </v-text-field>
+                    ></v-text-field>
                   </template>
-                  <v-time-picker
-                    v-if="forTime"
-                    v-model="newTodo.time"
-                    full-width
-                  >
-                  <v-spacer></v-spacer>
+                  <v-time-picker v-if="forTime" v-model="newTodo.time" full-width>
+                    <v-spacer></v-spacer>
                     <v-btn text color="primary" @click="forTime = false">Cancel</v-btn>
                     <v-btn text color="primary" @click="$refs.menu.save(newTodo.time)">OK</v-btn>
                   </v-time-picker>
-                  
                 </v-menu>
               </v-col>
             </v-flex>
@@ -146,21 +140,9 @@ export default {
       let fullTime = `${payload.date}T${payload.time}`;
       delete payload.date;
       delete payload.time;
-      // let now = this.moment().format()
       payload.fullTime = this.moment(fullTime).format();
-      // if (!(this.moment(fullTime).isBefore(now))) {
       this.$store.dispatch("createNewTodo", payload);
       this.$router.push("/task/upcoming");
-      // window.location.reload()
-      console.log(payload);
-      // this.$store.dispatch("checkLeastUpcomingTime");
-      // }
-      // else if (fullTime == "Invalid date") {
-      //     console.log("elif",fullTime)
-      // }
-      // else {
-      //     return;
-      // }
     }
   },
   computed: {

@@ -15,7 +15,7 @@ module.exports = {
       "theme_color": "#0c9041",
       "background_color": "#ffffff",
       "display": "standalone",
-      "Scope": "/",
+      "scope": "/",
       "start_url": ".",
       "icons": [
         {

@@ -40,7 +40,10 @@
     </v-navigation-drawer>
     <v-app-bar dense fixed>
       <v-app-bar-nav-icon @click="sideNav = !sideNav" class="hidden-sm-and-up"></v-app-bar-nav-icon>
-      <v-toolbar-title class="mr-6">ReminDo</v-toolbar-title>
+      <v-avatar tile router-link to="/welcome">
+        <v-img :src="require('../assets/remindo.png')"></v-img>
+      </v-avatar>
+      <v-toolbar-title class="mr-6" router-link to="/welcome">ReminDo</v-toolbar-title>
       <v-toolbar-items v-for="item in items" :key="item.title" class="hidden-xs-only">
         <v-btn depressed router-link :to="item.link">
           <v-icon left>{{item.icon}}</v-icon> {{item.title}}

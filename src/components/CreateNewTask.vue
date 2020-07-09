@@ -2,7 +2,7 @@
   <v-container>
     <v-layout row>
       <v-flex xs12 sm6 offset-sm3>
-        <h4>Create New Task</h4>
+        <h4 class="mt-1">Create New Task</h4>
       </v-flex>
     </v-layout>
     <v-layout row>
@@ -76,23 +76,28 @@
                   max-width="290px"
                   min-width="290px"
                 >
-                  <template v-slot:activator="{ on }">
+                  <template v-slot:activator="{ on, attrs }">
                     <v-text-field
                       v-model="newTodo.time"
-                      label="Select Time"
+                      label="Select Time(24 Hrs)"
                       required
                       prepend-icon="access_time"
                       readonly
+                      v-bind="attrs"
                       v-on="on"
-                    ></v-text-field>
+                    >
+                    </v-text-field>
                   </template>
                   <v-time-picker
                     v-if="forTime"
                     v-model="newTodo.time"
                     full-width
-                    ampm-in-title
-                    @click:minute="$refs.menu.save(newTodo.time)"
-                  ></v-time-picker>
+                  >
+                  <v-spacer></v-spacer>
+                    <v-btn text color="primary" @click="forTime = false">Cancel</v-btn>
+                    <v-btn text color="primary" @click="$refs.menu.save(newTodo.time)">OK</v-btn>
+                  </v-time-picker>
+                  
                 </v-menu>
               </v-col>
             </v-flex>
@@ -146,9 +151,9 @@ export default {
       // if (!(this.moment(fullTime).isBefore(now))) {
       this.$store.dispatch("createNewTodo", payload);
       this.$router.push("/task/upcoming");
-      window.location.reload()
+      // window.location.reload()
       console.log(payload);
-      this.$store.dispatch("checkLeastUpcomingTime");
+      // this.$store.dispatch("checkLeastUpcomingTime");
       // }
       // else if (fullTime == "Invalid date") {
       //     console.log("elif",fullTime)

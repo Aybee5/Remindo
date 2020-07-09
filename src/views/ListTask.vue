@@ -1,39 +1,38 @@
 <template>
   <div>
-    <v-list three-line>
-      <v-subheader>{{this.$route.params.id}} tasks</v-subheader>
-      <v-divider inset></v-divider>
-      <template v-for="item in getTodos">
-        <v-list-item :key="item.refKey">
-          <v-list-item-content>
-            <v-list-item-title>{{item.title}}</v-list-item-title>
-            <v-list-item-subtitle>{{item.description}}</v-list-item-subtitle>
-            <small>Due {{moment().to(item.fullTime)}}</small>
-          </v-list-item-content>
-          <v-list-item-icon>
-            <v-tooltip bottom>
-              <template v-slot:activator="{ on }">
-                <v-icon v-on="on" v-if="!isComplete" @click="complete(item)" color="green">done</v-icon>
-              </template>
-              <span>Mark Done</span>
-            </v-tooltip>
-            <v-tooltip bottom>
-              <template v-slot:activator="{ on }">
-                <v-icon v-on="on" v-if="!isComplete" color="blue">edit</v-icon>
-              </template>
-              <span>Edit</span>
-            </v-tooltip>
-            <v-tooltip bottom>
-              <template v-slot:activator="{ on }">
-                <v-icon v-on="on" @click="deleteTodo(item)" color="red">delete</v-icon>
-              </template>
-              <span>Delete</span>
-            </v-tooltip>
-          </v-list-item-icon>
-        </v-list-item>
-        <v-divider inset :key="item.refKey"></v-divider>
-      </template>
-    </v-list>
+    <v-layout row>
+      <v-flex xs12 md6 offset-md3>
+        <v-list three-line>
+          <v-subheader>{{this.$route.params.id}} tasks</v-subheader>
+          <v-divider inset></v-divider>
+          <template v-for="item in getTodos">
+            <v-list-item :key="item.refKey">
+              <v-list-item-content>
+                <v-list-item-title>{{item.title}}</v-list-item-title>
+                <v-list-item-subtitle>{{item.description}}</v-list-item-subtitle>
+                <small>Due {{moment().to(item.fullTime)}}</small>
+              </v-list-item-content>
+              <v-list-item-icon>
+                <v-tooltip bottom>
+                  <template v-slot:activator="{ on }">
+                    <v-icon v-on="on" v-if="!isComplete" @click="complete(item)" color="green">done</v-icon>
+                  </template>
+                  <span>Mark Done</span>
+                </v-tooltip>
+                
+                <v-tooltip bottom>
+                  <template v-slot:activator="{ on }">
+                    <v-icon v-on="on" @click="deleteTodo(item)" color="red">delete</v-icon>
+                  </template>
+                  <span>Delete</span>
+                </v-tooltip>
+              </v-list-item-icon>
+            </v-list-item>
+            <v-divider inset :key="item.refKey"></v-divider>
+          </template>
+        </v-list>
+      </v-flex>
+    </v-layout>
     <!-- dialog start -->
     <v-row justify="center">
       <v-dialog v-model="dialog" persistent max-width="290">
@@ -67,7 +66,8 @@ export default {
     return {
       dialog: false,
       snackbar: false,
-      text: null
+      text: null,
+      installPromptEvent: null
     };
   },
   /* 
@@ -91,22 +91,28 @@ Toast.fire({
   methods: {
     notify() {
       this.dialog = false;
-      Notification.requestPermission()
-        .then(result => {
-          if (result === "granted") {
-            console.log("notification on");
-          }
-        })
+      Notification.requestPermission().then(result => {
+        if (result === "granted") {
+          console.log(this.installPromptEvent, "in methods before valuating");
+          this.installPromptEvent.prompt();
+          this.installPromptEvent.userChoice.then(choice => {
+            choice.outcome === "accepted"
+              ? this.installPromptEvent === null
+              : console.log(this.installPromptEvent);
+          });
+          console.log("notification on");
+        }
+      });
     },
     complete(item) {
       this.$store.dispatch("complete", item);
-      this.text = "Congratulation, you completed a task"
-      this.snackbar = true
+      this.text = "Congratulation, you completed a task";
+      this.snackbar = true;
     },
     deleteTodo(item) {
       this.$store.dispatch("deleteTodo", item);
-      this.text = "Deleted successfully"
-      this.snackbar = true
+      this.text = "Deleted successfully";
+      this.snackbar = true;
     }
   },
   computed: {
@@ -142,6 +148,12 @@ Toast.fire({
   },
   created() {
     console.log("created");
+    window.addEventListener("beforeinstallprompt", event => {
+      console.log(event, "before install");
+      event.preventDefault();
+      this.installPromptEvent = event;
+      console.log("install prompt", this.installPromptEvent);
+    });
     if (
       "Notification" in window &&
       Notification.permission !== "denied" &&

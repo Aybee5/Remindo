@@ -32,7 +32,7 @@ self.addEventListener("notificationclick", (event) => {
                 includeUncontrolled: true
             });
             let chatClient;
-            let appUrl = 'https://remindo.netlify.com';
+            let appUrl = 'https://remindo.netlify.app';
             for (const client of allClients) {
                 if (client['url'].indexOf(appUrl) >= 0) {
                     client.focus();

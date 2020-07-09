@@ -1,9 +1,9 @@
 <template>
   <v-app>
-    <v-main>
+    <main>
       <NavBar v-if="notWelcome"> </NavBar>
       <router-view />
-    </v-main>
+    </main>
     
   </v-app>
 </template>

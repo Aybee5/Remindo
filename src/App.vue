@@ -1,37 +1,26 @@
 <template>
   <v-app>
     <main>
-      <NavBar v-if="notWelcome"> </NavBar>
+      <NavBar v-if="notWelcome"></NavBar>
       <router-view />
     </main>
-    
   </v-app>
 </template>
 
 <script>
-import NavBar from './components/NavBar'
+import NavBar from "./components/NavBar";
 export default {
-  data(){
-    return{
-    }
-  },
-  computed:{
+  computed: {
     notWelcome() {
       if (this.$route.path == "/welcome") {
-        return false
-      }
-      else {
-        return true
+        return false;
+      } else {
+        return true;
       }
     }
   },
-  components:{
-    NavBar,
-  },
-  watch: {
-  },
-  created() {
-    
+  components: {
+    NavBar
   }
-}
+};
 </script>

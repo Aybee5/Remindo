@@ -6,7 +6,7 @@ import Welcome from "../views/Welcome.vue"
 
 Vue.use(VueRouter)
 
-  const routes = [
+const routes = [
   {
     path: '/',
     redirect: '/task/upcoming'
@@ -31,11 +31,6 @@ Vue.use(VueRouter)
 const router = new VueRouter({
   mode: 'history',
   base: process.env.BASE_URL,
-  // scrollBehavior : (to, from, savedPosition) => {
-  //   if (savedPosition) {
-  //     return savedPosition
-  //   }
-  // },
   routes
 })
 

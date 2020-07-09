@@ -8,7 +8,7 @@ import VuexPersist from "vuex-persist";
 const vuexLocalStorage = new VuexPersist({
   key: 'vuex', // The key to store the state on in the storage provider.
   storage: window.localStorage, // or window.sessionStorage or localForage
-  
+
 })
 
 Vue.use(Vuex)
@@ -67,7 +67,7 @@ export default new Vuex.Store({
         let minDate = upComingTodosTime.reduce(function (a, b) {
           return a < b ? a : b;
         });
-        let leastTask = current.find(todo=> new Date(todo.fullTime) == minDate.toString())
+        let leastTask = current.find(todo => new Date(todo.fullTime) == minDate.toString())
         let now = moment()
         let milliSecondsDiff = moment().range(now, minDate).diff()
         if ("serviceWorker" in navigator && navigator.serviceWorker.controller) {
@@ -89,12 +89,6 @@ export default new Vuex.Store({
     deleteTodo(state, payload) {
       let itemIndex = state.todos.indexOf(payload)
       state.todos.splice(itemIndex, 1)
-    },
-    checkUpcomingTime() {
-
-      // upComingTime
-      // console.log(upComingTime)
-
     },
     complete(state, payload) {
       let navId = payload.navId

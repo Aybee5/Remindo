@@ -19,7 +19,7 @@
                   </template>
                   <span>Mark Done</span>
                 </v-tooltip>
-                
+
                 <v-tooltip bottom>
                   <template v-slot:activator="{ on }">
                     <v-icon v-on="on" @click="deleteTodo(item)" color="red">delete</v-icon>
@@ -70,37 +70,17 @@ export default {
       installPromptEvent: null
     };
   },
-  /* 
-    const Toast = Swal.mixin({
-  toast: true,
-  position: 'top-end',
-  showConfirmButton: false,
-  timer: 3000,
-  timerProgressBar: true,
-  onOpen: (toast) => {
-    toast.addEventListener('mouseenter', Swal.stopTimer)
-    toast.addEventListener('mouseleave', Swal.resumeTimer)
-  }
-})
-
-Toast.fire({
-  icon: 'success',
-  title: 'Signed in successfully'
-})
-    */
   methods: {
     notify() {
       this.dialog = false;
       Notification.requestPermission().then(result => {
         if (result === "granted") {
-          console.log(this.installPromptEvent, "in methods before valuating");
           this.installPromptEvent.prompt();
           this.installPromptEvent.userChoice.then(choice => {
             choice.outcome === "accepted"
               ? this.installPromptEvent === null
-              : console.log(this.installPromptEvent);
+              : "";
           });
-          console.log("notification on");
         }
       });
     },
@@ -123,7 +103,7 @@ Toast.fire({
       isComplete: "isComplete",
       getUpcomingTodoTime: "getUpcomingTodoTime"
     }),
-    ...mapActions(["loadTodo", "checkUpcomingTime", "checkLeastUpcomingTime"])
+    ...mapActions(["loadTodo", "checkLeastUpcomingTime"])
   },
   watch: {
     $route() {
@@ -132,27 +112,15 @@ Toast.fire({
     getUpcomingTodoTime() {
       this.$store.dispatch("checkLeastUpcomingTime");
     }
-    // getUpcomingTodoTime() {
-    //   // this.checkTime()
-    // }
   },
   mounted() {
-    // console.log("mounted")
-    // this.checkTime()
     this.getTodos = this.$store.dispatch("loadTodo");
     this.$store.dispatch("checkLeastUpcomingTime");
-    console.log("mounted again ");
-  },
-  updated() {
-    // console.log("updated")
   },
   created() {
-    console.log("created");
     window.addEventListener("beforeinstallprompt", event => {
-      console.log(event, "before install");
       event.preventDefault();
       this.installPromptEvent = event;
-      console.log("install prompt", this.installPromptEvent);
     });
     if (
       "Notification" in window &&

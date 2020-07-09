@@ -24,7 +24,7 @@ Vue.mixin({
     moment
   },
   mounted() {
-    
+
   }
 })
 

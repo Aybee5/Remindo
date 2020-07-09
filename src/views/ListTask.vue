@@ -1,7 +1,7 @@
 <template>
   <div>
-    <v-layout row class="ml-1">
-      <v-flex xs12 md6>
+    <v-layout row>
+      <v-flex xs12 md6 offset-md3>
         <v-list three-line>
           <v-subheader>{{this.$route.params.id}} tasks</v-subheader>
           <v-divider inset></v-divider>

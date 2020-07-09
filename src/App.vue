@@ -26,7 +26,7 @@ export default {
 </script>
 
 <style>
-  #app {
+  body {
     overscroll-behavior-y: none;
   }
 </style>

@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import New from "../components/CreateNewTask.vue"
+import CreateNewTask from "../views/CreateNewTask.vue"
 import TaskList from "../views/ListTask.vue"
 import Welcome from "../views/Welcome.vue"
 
@@ -24,7 +24,7 @@ const routes = [
   {
     path: '/new',
     name: 'New',
-    component: New
+    component: CreateNewTask
   }
 ]
 

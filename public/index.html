@@ -5,6 +5,17 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width,initial-scale=1.0">
     <link rel="icon" href="<%= BASE_URL %>favicon.ico">
+    <link rel=icon type=image/png sizes=32x32 href=/img/icons/favicon-32x32.png>
+    <link rel=icon type=image/png sizes=16x16 href=/img/icons/favicon-16x16.png>
+    <link rel=manifest href=/manifest.json>
+    <meta name=theme-color content=#0c9041>
+    <meta name=apple-mobile-web-app-capable content=no>
+    <meta name=apple-mobile-web-app-status-bar-style content=default>
+    <meta name=apple-mobile-web-app-title content=Remindo>
+    <link rel=apple-touch-icon href=/img/icons/apple-touch-icon.png>
+    <link rel=mask-icon href=/img/icons/safari-pinned-tab.svg color=#0c9041>
+    <meta name=msapplication-TileImage content=/img/icons/mstile-150x150.png>
+    <meta name=msapplication-TileColor content=#fff>
     <title><%= htmlWebpackPlugin.options.title %></title>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@mdi/font@latest/css/materialdesignicons.min.css">
@@ -16,4 +27,5 @@
     <div id="app"></div>
     <!-- built files will be auto injected -->
   </body>
+  <script>"serviceWorker"in navigator&&navigator.serviceWorker.register("/service-worker.js").then(console.log("service worker installation successfully")).catch(console.error);</script>
 </html>

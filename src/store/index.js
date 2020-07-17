@@ -3,7 +3,8 @@ import Vuex from 'vuex'
 import Moment from 'moment'
 import { extendMoment } from "moment-range"
 const moment = extendMoment(Moment)
-import VuexPersist from "vuex-persist";
+import VuexPersist from "vuex-persist"
+import router from '../router/index'
 
 const vuexLocalStorage = new VuexPersist({
   key: 'vuex', // The key to store the state on in the storage provider.
@@ -22,8 +23,8 @@ export default new Vuex.Store({
     todos: []
   },
   getters: {
-    getNavId(state) {
-      return state.route.params.id
+    getNavId() {
+      return router.currentRoute.params.id
     },
     isComplete(state) {
       return state.isComplete
@@ -71,6 +72,7 @@ export default new Vuex.Store({
         let now = moment()
         let milliSecondsDiff = moment().range(now, minDate).diff()
         if ("serviceWorker" in navigator && navigator.serviceWorker.controller) {
+          console.log("sending message to sw")
           navigator.serviceWorker.controller.postMessage({ time: milliSecondsDiff, title: leastTask.title })
         }
       }

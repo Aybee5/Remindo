@@ -47,7 +47,7 @@ export default new Vuex.Store({
   },
   actions: {
     loadTodo(context) {
-      let id = context.getters.getNavId
+      let id = router.currentRoute.params.id
       context.commit('loadTodo', id)
     },
     checkLeastUpcomingTime(context) {
@@ -78,7 +78,8 @@ export default new Vuex.Store({
       }
     },
     complete(context, payload) {
-      context.commit("complete", { item: payload, navId: context.getters.getNavId })
+      let navId = router.currentRoute.params.id
+      context.commit("complete", { item: payload, navId: navId })
     },
     deleteTodo(context, payload) {
       context.commit("deleteTodo", payload)

@@ -99,7 +99,6 @@ export default {
     ...mapGetters({
       getNavId: "getNavId",
       getTodos: "getTodos",
-      getIcon: "getIcon",
       isComplete: "isComplete",
       getUpcomingTodoTime: "getUpcomingTodoTime"
     }),
@@ -115,7 +114,6 @@ export default {
   },
   mounted() {
     this.getTodos = this.$store.dispatch("loadTodo");
-    this.$store.dispatch("checkLeastUpcomingTime");
   },
   created() {
     window.addEventListener("beforeinstallprompt", event => {

@@ -149,7 +149,6 @@ export default {
     formIsValid() {
       return (
         this.newTodo.title !== null &&
-        this.newTodo.description !== null &&
         this.newTodo.date !== null &&
         this.newTodo.time !== null
       );

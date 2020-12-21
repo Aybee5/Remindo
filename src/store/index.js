@@ -7,7 +7,7 @@ import VuexPersist from "vuex-persist"
 import router from '../router/index'
 
 const vuexLocalStorage = new VuexPersist({
-  key: 'vuex', // The key to store the state on in the storage provider.
+  key: 'vuex', // The key to store the state on in the storage provider. you can chosse anyother store
   storage: window.localStorage, // or window.sessionStorage or localForage
 
 })
